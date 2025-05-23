@@ -2,59 +2,476 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Celebration</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
-</head>
-<body>
-  <!-- Background gradient -->
-  <div class="bg-gradient"></div>
-  
-  <!-- Loading animation -->
-  <div class="loading-overlay">
-    <div class="loading-animation">
-      <div class="cake-loader"></div>
-      <div class="loading-text">Preparing your birthday surprise...</div>
-    </div>
-  </div>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday, Dad Dara!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #ff4081;
+      --secondary-color: #8c54ff;
+      --accent-color: #00e5ff;
+      --dark-color: #2a2a3c;
+      --light-color: #ffffff;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
 
-  <!-- Confetti container -->
-  <div class="confetti-container"></div>
-  
-  <!-- Card container with floating decorations -->
-  <div class="card-container">
-    <img src="https://cdn.pixabay.com/photo/2022/08/12/13/22/birthday-cake-7381733_1280.png" alt="Birthday Cake" class="cake-image">
-    <img src="https://cdn.pixabay.com/photo/2012/04/05/01/39/balloon-25734_640.png" alt="Balloon" class="balloon balloon-1">
-    <img src="https://cdn.pixabay.com/photo/2012/04/05/01/41/balloon-25739_640.png" alt="Balloon" class="balloon balloon-2">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      color: var(--dark-color);
+      overflow-x: hidden;
+    }
+
+    /* Preloader */
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .preloader.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .cake-loader {
+      width: 100px;
+      height: 100px;
+      background-image: url('https://cdn.pixabay.com/photo/2022/01/22/15/30/happy-birthday-6957627_640.jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      animation: pulse 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.8); }
+      100% { transform: scale(1.2); }
+    }
+
+    /* Main Content */
+    .container {
+      min-height: 100vh;
+      perspective: 1000px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Confetti Effect */
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: var(--primary-color);
+      border-radius: 0;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+      }
+    }
+
+    /* Floating Balloons */
+    .balloon {
+      position: absolute;
+      width: 30px;
+      height: 40px;
+      border-radius: 50%;
+      animation: float 15s infinite ease-in-out;
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-100px) translateX(20px); }
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    }
+
+    .hero-content {
+      text-align: center;
+      max-width: 800px;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      transform-style: preserve-3d;
+      transform: perspective(1000px);
+      z-index: 2;
+      position: relative;
+      transition: var(--transition);
+      animation: fadeIn 1s ease-out, float 6s infinite ease-in-out;
+    }
+
+    .hero-content:hover {
+      transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .birthday-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 5rem;
+      margin-bottom: 20px;
+      color: var(--light-color);
+      text-shadow: 3px 3px 0 #ff4081, 
+                  -1px -1px 0 #8c54ff, 
+                  1px -1px 0 #8c54ff, 
+                  -1px 1px 0 #8c54ff, 
+                  1px 1px 0 #8c54ff;
+      animation: colorChange 5s infinite alternate;
+      position: relative;
+    }
+
+    @keyframes colorChange {
+      0% { color: var(--light-color); }
+      50% { color: #ffec99; }
+      100% { color: var(--light-color); }
+    }
+
+    .message {
+      font-size: 1.5rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      color: var(--light-color);
+      font-weight: 400;
+      max-width: 700px;
+      position: relative;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .message span {
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .message span:hover {
+      transform: translateY(-10px) scale(1.2);
+      color: var(--accent-color);
+    }
+
+    .cake-image {
+      width: 200px;
+      height: 200px;
+      margin: 20px auto;
+      background-image: url('https://cdn.pixabay.com/photo/2022/01/22/15/30/cake-6957626_640.jpg');
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transform: translateZ(50px);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .cake-image:hover {
+      transform: translateZ(50px) scale(1.1);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .cake-image::before {
+      content: "";
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      width: 4px;
+      height: 20px;
+      background: #ff4081;
+      transform: translateX(-50%);
+    }
+
+    .cake-image::after {
+      content: "";
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      background: #ffef5d;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 10px #ffef5d, 0 0 20px #ffef5d;
+      animation: flicker 1s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px #ffef5d, 0 0 20px #ffef5d; }
+      50% { opacity: 0.8; box-shadow: 0 0 5px #ffef5d, 0 0 10px #ffef5d; }
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-style: italic;
+      color: var(--light-color);
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+
+    .footer:hover {
+      transform: scale(1.1);
+      color: var(--accent-color);
+    }
     
-    <div class="card">
-      <div class="card-front">
-        <h1>Happy Birthday!</h1>
-        <p class="subtitle">A special day for an amazing person</p>
-        <p class="message">Wishing you a wonderful birthday filled with joy, laughter, and unforgettable moments, <span id="recipient-name">Dad Dara</span>!</p>
-        <button class="btn" id="flip-btn">Open Your Birthday Card</button>
-      </div>
-      
-      <div class="card-back">
-        <h1>Hooray!</h1>
-        <p class="message">
-          May your day be as bright as your smile and as wonderful as you are.
-          Celebrating another year of your amazing journey through life!
-          Here's to many more years of happiness and success.
-        </p>
-        <button class="btn" id="flip-btn">Close Card</button>
-        <p class="footer">With love and best wishes</p>
-      </div>
-    </div>
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .theme-toggle svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--light-color);
+    }
+
+    /* Dark Theme */
+    .dark-theme {
+      background: linear-gradient(135deg, #2a2a3c, #4c4177);
+    }
+
+    .dark-theme .hero {
+      background: linear-gradient(135deg, #4c4177, #3d3659);
+    }
+
+    .dark-theme .hero-content {
+      background: rgba(30, 30, 40, 0.5);
+    }
+
+    .dark-theme .theme-toggle svg {
+      fill: #ffec99;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .birthday-title {
+        font-size: 3.5rem;
+      }
+
+      .message {
+        font-size: 1.2rem;
+      }
+
+      .cake-image {
+        width: 150px;
+        height: 150px;
+      }
+
+      .hero-content {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .birthday-title {
+        font-size: 2.8rem;
+      }
+
+      .message {
+        font-size: 1rem;
+      }
+
+      .cake-image {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
+<script src="https://lib.youware.com/youware-lib.1747145198.js" id="yourware-lib"></script></head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="cake-loader"></div>
   </div>
 
-  <!-- Background music -->
-  <audio id="birthday-music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  </audio>
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24">
+      <path d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z" />
+    </svg>
+  </button>
 
-  <script src="js/script.js"></script>
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Confetti Container -->
+    <div class="confetti-container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="birthday-title">Happy Birthday, Dad Dara!</h1>
+        <div class="cake-image"></div>
+        <p class="message">
+          <span>W</span>ishing <span>y</span>ou <span>a</span> <span>d</span>ay <span>f</span>illed <span>w</span>ith <span>j</span>oy, <span>l</span>aughter, <span>a</span>nd <span>a</span>ll <span>t</span>he <span>l</span>ove <span>y</span>ou <span>t</span>ruly <span>d</span>eserve.<br>
+          <span>M</span>ay <span>t</span>his <span>n</span>ew <span>y</span>ear <span>b</span>ring <span>y</span>ou <span>b</span>lessings, <span>g</span>ood <span>h</span>ealth, <span>a</span>nd <span>h</span>appiness.<br>
+          <span>E</span>njoy <span>y</span>our <span>s</span>pecial <span>d</span>ay! 🎉🎂💙
+        </p>
+        <div class="footer">— by CleverOba</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Preloader
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.querySelector('.preloader').classList.add('fade-out');
+      }, 1000);
+    });
+
+    // Theme Toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-theme');
+    });
+
+    // Create Confetti
+    function createConfetti() {
+      const confettiContainer = document.querySelector('.confetti-container');
+      const colors = ['#ff4081', '#8c54ff', '#00e5ff', '#ffeb3b', '#76ff03'];
+      
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        
+        // Random properties
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.width = Math.random() * 10 + 5 + 'px';
+        confetti.style.height = Math.random() * 10 + 5 + 'px';
+        confetti.style.opacity = Math.random() + 0.5;
+        
+        // Random shape
+        if (Math.random() > 0.5) {
+          confetti.style.borderRadius = '50%';
+        } else if (Math.random() > 0.5) {
+          confetti.style.borderRadius = '2px';
+          confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        }
+        
+        // Animation duration
+        confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+        
+        confettiContainer.appendChild(confetti);
+        
+        // Remove confetti after animation
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
+
+    // Create Balloons
+    function createBalloons() {
+      const container = document.querySelector('.container');
+      const colors = ['#ff4081', '#8c54ff', '#00e5ff', '#ffeb3b', '#76ff03'];
+      
+      for (let i = 0; i < 12; i++) {
+        const balloon = document.createElement('div');
+        balloon.classList.add('balloon');
+        
+        // Random properties
+        balloon.style.left = Math.random() * 100 + 'vw';
+        balloon.style.top = Math.random() * 100 + 'vh';
+        balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        balloon.style.animationDelay = Math.random() * 10 + 's';
+        balloon.style.animationDuration = Math.random() * 10 + 10 + 's';
+        
+        container.appendChild(balloon);
+      }
+    }
+
+    // Add Hover Effects to Message
+    const messageSpans = document.querySelectorAll('.message span');
+    messageSpans.forEach(span => {
+      const delay = Math.random() * 1000;
+      setTimeout(() => {
+        span.style.color = span.style.color === '#00e5ff' ? '#ffffff' : '#00e5ff';
+      }, delay);
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      createBalloons();
+      
+      // Create confetti every few seconds
+      createConfetti();
+      setInterval(createConfetti, 5000);
+      
+      // Add parallax effect
+      document.addEventListener('mousemove', function(e) {
+        const hero = document.querySelector('.hero-content');
+        const cake = document.querySelector('.cake-image');
+        
+        const x = (window.innerWidth / 2 - e.pageX) / 30;
+        const y = (window.innerHeight / 2 - e.pageY) / 30;
+        
+        hero.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${-x}deg)`;
+        cake.style.transform = `translateZ(50px) translateX(${-x * 0.5}px) translateY(${-y * 0.5}px)`;
+      });
+    });
+  </script>
 </body>
 </html>
